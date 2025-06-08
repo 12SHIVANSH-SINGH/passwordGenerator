@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -25,7 +25,7 @@ function App() {
      //useEffect(() => passwordGenerator(), [length])
   }
    useEffect(() => passwordGenerator(), [sc,length,digit])
-  const passwordGenerator = () =>{
+  const passwordGenerator = useCallback(() =>{
     let field = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
     console.log(field.length,digit,sc);
     let newPassword="";
@@ -38,7 +38,7 @@ function App() {
     }
     setPassword(newPassword);
     
-  }
+  },[sc, digit, length, setPassword])
 
   return (
     <div className="bg-stone-600 text-center w-full h-100 rounded-3xl p-2 m-3 border-3 ">
