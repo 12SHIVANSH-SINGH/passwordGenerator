@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -20,6 +20,13 @@ function App() {
     setSc(((sc==false)?true:false))
     
   }
+
+  const passwordRef = useRef(null); // stores the refernce of password and we can use it to make some changes without the need of re rendering
+  const copyPass = () => {
+    window.navigator.clipboard.writeText(password);
+    passwordRef.current.select();
+  }
+
   const toggleLenght = (e)=>{ // callback with a target to set the value
     setLength(e.target.value);
      //useEffect(() => passwordGenerator(), [length])
@@ -43,8 +50,8 @@ function App() {
   return (
     <div className="bg-stone-600 text-center w-full h-100 rounded-3xl p-2 m-3 border-3 ">
       <header className="block">Password Generator</header>
-      <input className="bg-orange-300 text-black rounded-xl m-auto my-4 w-100 p-2 " value={`${password}`} readOnly/>
-      <button className="bg-blue-400 p-2 rounded-xl w-20 mx-2 hover:bg-blue-600 cursor-pointer">
+      <input className="bg-orange-300 text-black rounded-xl m-auto my-4 w-100 p-2 " ref={passwordRef} value={`${password}`} readOnly/>
+      <button className="bg-blue-400 p-2 rounded-xl w-20 mx-2 hover:bg-blue-600 cursor-pointer" onClick={copyPass}>
         Copy
       </button>
       <br />
